@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1 class="mt-4">{{ data.title }}</h1>
+        <hr>
+        <p>{{ data.timestamp }}</p>
+
+        <hr>
+        {% if data.image_path %}
+        <img class="img-fluid rounded" src="{{ url_for('static', filename=data.image_path) }}" alt="">
+        {% endif %}
+
+        <hr>
+        {{ data.body | safe }}
+        <hr>
+
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="card my-4">
+          <h5 class="card-header">Поиск</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" >
+              <span class="input-group-append">
+                <button class="btn btn-secondary" type="button">Найти</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script src="{{ url_for('static', filename= 'vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+</body>
+{% endblock %}
+
+
+</html>

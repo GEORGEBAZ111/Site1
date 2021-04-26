@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <br>
+
+            {% if search_title %}
+            <h2>{{ search_title }}</h2>
+            {% endif %}
+
+            {% for post in data %}
+            <div class="card mb-4">
+                {% if post.image_path %}
+                <img class="card-img-top" src="{{ url_for('static', filename=post.image_path) }}" alt="">
+                {%endif%}
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    {{ post.body[:128] | safe }}
+                    <br>
+                    <a href="/post?id={{ post.id }}" class="btn btn-primary">Читать</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ post.timestamp }}
+                </div>
+            </div>
+            {% endfor %}
+            {% if btns != (False, False) %}
+            <ul class="pagination justify-content-center mb-4">
+                <li class="page-item {% if not btns[0] %} disabled {% endif %} ">
+                    <a class="page-link" href="/?page={{ cur_page - 1}}">&larr; Older</a>
+                </li>
+                <li class="page-item {% if not btns[1] %} disabled {% endif %}">
+                    <a class="page-link" href="/?page={{ cur_page + 1}}">Newer &rarr;</a>
+                </li>
+            </ul>
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card my-4">
+                <h5 class="card-header">Поиск</h5>
+                <form class="form-example" action="" method="post">
+                    {{ form.hidden_tag() }}
+                <div class="card-body">
+                    <div class="input-group">
+                        {{ form.req(size=32, class_="form-control") }}
+                        <span class="input-group-append">
+                            {{ form.submit(class_="btn btn-secondary") }}
+              </span>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename= 'vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename= 'vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+{% endblock %}
+</html>
